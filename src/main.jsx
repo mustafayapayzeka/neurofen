@@ -7,14 +7,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </React.StrictMode>
 )
-```
-
-**Commit changes** deyin.
-
----
-
-## Adım 3 — `index.html` oluştur
-
-Dosya adı:
-```
-index.html
