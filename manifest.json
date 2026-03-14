@@ -1,7 +1,7 @@
 {
   "name": "NöroFen",
   "short_name": "NöroFen",
-  "description": "Nöromitten Arın, Bilimle Öğret",
+  "description": "Mit Avcısı Yapay Zeka — Nöromitten Arın, Bilimle Öğret",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0e1a",
@@ -9,14 +9,16 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/Logo.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/Logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
