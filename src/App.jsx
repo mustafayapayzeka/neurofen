@@ -70,6 +70,7 @@ export default function App() {
   const [silOnay, setSilOnay] = useState(null);
   const [basariMesaj, setBasariMesaj] = useState("");
   const [emojiSecici, setEmojiSecici] = useState(false);
+  const [akkordeon, setAkkordeon] = useState(null);
   // Araştırma state
   const [arastirmalar, setArastirmalar] = useState(BASLANGIC_ARASTIRMALAR);
   const [arastirmaForm, setArastirmaForm] = useState(BOŞ_ARASTIRMA);
@@ -292,6 +293,91 @@ export default function App() {
                   <div style={{ fontSize:11, color:"#7986a3" }}>{k.alt}</div>
                 </button>
               ))}
+            </div>
+
+            {/* ── HAKKINDA ACCORDION ── */}
+            <div style={{ marginBottom:16 }}>
+              <button onClick={()=>setAkkordeon(akkordeon?"":"acik")}
+                style={{ width:"100%", background:"rgba(255,255,255,0.02)", border:"1px solid rgba(255,255,255,0.07)", borderRadius:13, padding:"13px 16px", display:"flex", alignItems:"center", cursor:"pointer" }}>
+                <span style={{ fontSize:16, marginRight:8 }}>ℹ️</span>
+                <span style={{ fontSize:13, fontWeight:600, color:"#fff", flex:1, textAlign:"left" }}>Uygulama Hakkında</span>
+                <span style={{ color:"#7986a3", fontSize:14, transition:"transform 0.3s", transform:akkordeon?"rotate(180deg)":"rotate(0deg)" }}>▾</span>
+              </button>
+
+              {akkordeon && (
+                <div style={{ marginTop:8, display:"flex", flexDirection:"column", gap:8 }}>
+
+                  {/* Vizyon */}
+                  {[
+                    { id:"vizyon", ikon:"🧠", baslik:"Amaç & Vizyon", renk:"#4fc3f7",
+                      icerik: <div style={{ fontSize:12, color:"#9aa5be", lineHeight:1.7, borderLeft:"2px solid rgba(79,195,247,0.3)", paddingLeft:10 }}>NöroFen, fen bilimleri öğretmenlerinin ders planlarında farkında olmadan kullandığı nörobilimsel mitleri tespit etmek ve bilimsel alternatifler sunmak amacıyla geliştirilmiş AI destekli bir rehber uygulamadır.<br/><br/><span style={{color:"#4fc3f7",fontFamily:"monospace",fontSize:10}}>v1.0.0 · Mart 2026</span></div>
+                    },
+                    { id:"gelistirici", ikon:"👤", baslik:"Geliştirici / Akademisyen", renk:"#9c64f0",
+                      icerik: <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+                        <div style={{ width:44, height:44, borderRadius:"50%", background:"linear-gradient(135deg,#9c64f0,#f06292)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0 }}>🎓</div>
+                        <div>
+                          <div style={{ fontSize:13, fontWeight:600, color:"#fff" }}>Mustafa Yapayzeka</div>
+                          <div style={{ fontSize:11, color:"#9aa5be", marginTop:2 }}>Fen Bilimleri Eğitimi Araştırmacısı</div>
+                          <div style={{ fontSize:11, color:"#7986a3", marginTop:2, fontFamily:"monospace" }}>Nöroeğitim · Öğretmen Eğitimi</div>
+                        </div>
+                      </div>
+                    },
+                    { id:"kilavuz", ikon:"📖", baslik:"Nasıl Kullanılır?", renk:"#66bb6a",
+                      icerik: <div>{[
+                        {no:"1",ikon:"🔍",baslik:"Metin Analizi",aciklama:"Ders planınızı yapıştırın, AI nöromitleri tespit etsin."},
+                        {no:"2",ikon:"📚",baslik:"Kütüphane",aciklama:"Nöromitleri inceleyin, bilimsel alternatifleri öğrenin."},
+                        {no:"3",ikon:"🔬",baslik:"Araştırmalar",aciklama:"Güncel çalışma bulgularını takip edin."},
+                        {no:"4",ikon:"💬",baslik:"AI Asistan",aciklama:"Aklınıza takılan soruları AI'a sorun."},
+                      ].map(a => (
+                        <div key={a.no} style={{ display:"flex", gap:10, marginBottom:8, alignItems:"flex-start" }}>
+                          <div style={{ width:20, height:20, borderRadius:"50%", background:"rgba(102,187,106,0.15)", border:"1px solid rgba(102,187,106,0.3)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, color:"#66bb6a", fontFamily:"monospace", flexShrink:0, marginTop:1 }}>{a.no}</div>
+                          <div>
+                            <div style={{ fontSize:12, fontWeight:600, color:"#fff" }}>{a.ikon} {a.baslik}</div>
+                            <div style={{ fontSize:11, color:"#9aa5be", lineHeight:1.5, marginTop:1 }}>{a.aciklama}</div>
+                          </div>
+                        </div>
+                      ))}</div>
+                    },
+                    { id:"versiyon", ikon:"🕐", baslik:"Versiyon Geçmişi", renk:"#ffb74d",
+                      icerik: <div style={{ display:"flex", gap:10, alignItems:"flex-start" }}>
+                        <span style={{ background:"rgba(255,183,77,0.15)", color:"#ffb74d", borderRadius:6, padding:"2px 8px", fontSize:10, fontFamily:"monospace", flexShrink:0 }}>v1.0.0</span>
+                        <div>
+                          <div style={{ fontSize:11, color:"#7986a3", fontFamily:"monospace" }}>Mart 2026</div>
+                          <div style={{ fontSize:12, color:"#c5cee0", marginTop:2 }}>İlk yayın — 6 nöromit, AI analiz, araştırma modülü</div>
+                        </div>
+                      </div>
+                    },
+                    { id:"iletisim", ikon:"✉️", baslik:"İletişim & Geri Bildirim", renk:"#f06292",
+                      icerik: <div>
+                        <div style={{ fontSize:12, color:"#9aa5be", lineHeight:1.6, marginBottom:10 }}>Öneri, hata bildirimi veya iş birliği için iletişime geçebilirsiniz.</div>
+                        {[{ikon:"📧",etiket:"E-posta",deger:"iletisim@neurofen.app"},{ikon:"🌐",etiket:"Web",deger:"neurofen.vercel.app"}].map(k=>(
+                          <div key={k.etiket} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:5 }}>
+                            <span style={{ fontSize:13 }}>{k.ikon}</span>
+                            <span style={{ fontSize:11, color:"#7986a3", width:52 }}>{k.etiket}:</span>
+                            <span style={{ fontSize:12, color:"#4fc3f7", fontFamily:"monospace" }}>{k.deger}</span>
+                          </div>
+                        ))}
+                      </div>
+                    },
+                  ].map(b => (
+                    <div key={b.id} style={{ background:"rgba(255,255,255,0.02)", border:`1px solid ${b.renk}22`, borderLeft:`3px solid ${b.renk}55`, borderRadius:12, overflow:"hidden" }}>
+                      <button onClick={()=>setAkkordeon(akkordeon===b.id?null:b.id)}
+                        style={{ width:"100%", background:"none", border:"none", padding:"11px 14px", display:"flex", alignItems:"center", gap:8, cursor:"pointer" }}>
+                        <span style={{ fontSize:14 }}>{b.ikon}</span>
+                        <span style={{ fontSize:12, fontWeight:600, color:"#fff", flex:1, textAlign:"left" }}>{b.baslik}</span>
+                        <span style={{ color:b.renk, fontSize:12, transition:"transform 0.2s", transform:akkordeon===b.id?"rotate(180deg)":"rotate(0deg)" }}>▾</span>
+                      </button>
+                      {akkordeon === b.id && (
+                        <div style={{ padding:"0 14px 13px" }}>{b.icerik}</div>
+                      )}
+                    </div>
+                  ))}
+
+                  <div style={{ textAlign:"center", padding:"8px 0 4px" }}>
+                    <div style={{ fontSize:10, color:"#4a5568", fontFamily:"monospace" }}>© 2026 NöroFen · Tüm hakları saklıdır</div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
