@@ -244,7 +244,7 @@ export default function App() {
         {/* HEADER */}
         <div style={{ padding:"18px 20px 14px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-            <img src="/Logo.png" alt="NöroFen Logo" style={{ width:42, height:42, borderRadius:10, objectFit:"cover" }}/>
+            <img src="/logo.png" alt="NöroFen Logo" style={{ width:42, height:42, borderRadius:10, objectFit:"cover" }}/>
             <div>
               <div style={{ fontSize:19, fontWeight:700, color:"#fff", letterSpacing:"-0.5px" }}>NöroFen</div>
               <div style={{ fontSize:10, color:"#7986a3", fontFamily:"monospace" }}>Nöromitten Arın · Bilimle Öğret</div>
