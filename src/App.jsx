@@ -71,6 +71,10 @@ export default function App() {
   const [basariMesaj, setBasariMesaj] = useState("");
   const [emojiSecici, setEmojiSecici] = useState(false);
   const [akkordeon, setAkkordeon] = useState(null);
+  const [adminGiris, setAdminGiris] = useState(false);
+  const [adminSifreGirdi, setAdminSifreGirdi] = useState("");
+  const [adminHata, setAdminHata] = useState(false);
+  const ADMIN_SIFRE = "neurofen2026";
   // Araştırma state
   const [arastirmalar, setArastirmalar] = useState(BASLANGIC_ARASTIRMALAR);
   const [arastirmaForm, setArastirmaForm] = useState(BOŞ_ARASTIRMA);
@@ -83,6 +87,11 @@ export default function App() {
   useEffect(() => {
     if (chatSonRef.current) chatSonRef.current.scrollIntoView({ behavior: "smooth" });
   }, [chatMesajlar]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("admin") !== null) setAktifEkran("adminGiris");
+  }, []);
 
   useEffect(() => {
     if (basariMesaj) { const t = setTimeout(() => setBasariMesaj(""), 3000); return () => clearTimeout(t); }
@@ -316,7 +325,7 @@ export default function App() {
                       icerik: <div style={{ display:"flex", alignItems:"center", gap:12 }}>
                         <div style={{ width:44, height:44, borderRadius:"50%", background:"linear-gradient(135deg,#9c64f0,#f06292)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0 }}>🎓</div>
                         <div>
-                          <div style={{ fontSize:13, fontWeight:600, color:"#fff" }}>Mustafa Ergun</div>
+                          <div style={{ fontSize:13, fontWeight:600, color:"#fff" }}>Mustafa Yapayzeka</div>
                           <div style={{ fontSize:11, color:"#9aa5be", marginTop:2 }}>Fen Bilimleri Eğitimi Araştırmacısı</div>
                           <div style={{ fontSize:11, color:"#7986a3", marginTop:2, fontFamily:"monospace" }}>Nöroeğitim · Öğretmen Eğitimi</div>
                         </div>
@@ -644,6 +653,29 @@ export default function App() {
           </div>
         )}
 
+        {/* ── ADMIN GİRİŞ EKRANI ─────────────────────────────────────── */}
+        {aktifEkran === "adminGiris" && !adminGiris && (
+          <div style={{ padding:"40px 24px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"60vh" }}>
+            <div style={{ width:64, height:64, borderRadius:16, background:"linear-gradient(135deg,#4fc3f7,#9c64f0)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:28, marginBottom:20 }}>⚙️</div>
+            <div style={{ fontSize:18, fontWeight:700, color:"#fff", marginBottom:6 }}>Yönetici Girişi</div>
+            <div style={{ fontSize:12, color:"#7986a3", marginBottom:28, textAlign:"center" }}>Bu alan yalnızca yöneticilere özeldir.</div>
+            <input
+              type="password"
+              value={adminSifreGirdi}
+              onChange={e=>{setAdminSifreGirdi(e.target.value);setAdminHata(false);}}
+              onKeyDown={e=>{if(e.key==="Enter"){if(adminSifreGirdi===ADMIN_SIFRE){setAdminGiris(true);setAktifEkran("yonetici");}else{setAdminHata(true);}}}}
+              placeholder="Şifre giriniz..."
+              style={{ width:"100%", maxWidth:280, background:"rgba(255,255,255,0.06)", border:`1px solid ${adminHata?"rgba(240,98,146,0.6)":"rgba(255,255,255,0.15)"}`, borderRadius:12, padding:"12px 16px", color:"#e8eaf0", fontSize:14, outline:"none", textAlign:"center", letterSpacing:"3px", marginBottom:8, boxSizing:"border-box" }}
+            />
+            {adminHata && <div style={{ fontSize:12, color:"#f06292", marginBottom:12 }}>⚠ Yanlış şifre</div>}
+            <button onClick={()=>{if(adminSifreGirdi===ADMIN_SIFRE){setAdminGiris(true);setAktifEkran("yonetici");}else{setAdminHata(true);}}}
+              style={{ width:"100%", maxWidth:280, background:"linear-gradient(135deg,#4fc3f7,#9c64f0)", border:"none", borderRadius:12, padding:"13px", color:"#fff", fontSize:14, fontWeight:600, cursor:"pointer", marginTop:4 }}>
+              Giriş Yap
+            </button>
+            <button onClick={()=>setAktifEkran("ana")} style={{ marginTop:12, background:"none", border:"none", color:"#7986a3", fontSize:12, cursor:"pointer" }}>← Ana Sayfaya Dön</button>
+          </div>
+        )}
+
         {/* ── YÖNETİCİ PANELİ ────────────────────────────────────────── */}
         {aktifEkran === "yonetici" && (
           <div style={{ padding:"18px 16px" }}>
@@ -726,7 +758,6 @@ export default function App() {
           {id:"kutuphane",ikon:"◫",etiket:"Kütüphane"},
           {id:"arastirmalar",ikon:"🔬",etiket:"Araştırma"},
           {id:"chat",ikon:"◉",etiket:"Asistan"},
-          {id:"yonetici",ikon:"⚙",etiket:"Yönetici"},
         ].map(tab => (
           <button key={tab.id} onClick={()=>setAktifEkran(tab.id)}
             style={{ flex:1, background:"none", border:"none", padding:"10px 2px 8px", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
